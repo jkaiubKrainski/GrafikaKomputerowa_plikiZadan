@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas - Projekt</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            background-color: #1a1a1a;
+            font-family: Arial, sans-serif;
+        }
+
+        canvas {
+            border: 2px solid #333;
+            background-color: #000;
+            display: block;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <canvas id="canvas" width="800" height="600"></canvas>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        const graphics = {
+            strokeLine: function(x1, y1, x2, y2) {
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+            },
+
+            strokeCircle: function(x, y, r) {
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.stroke();
+            },
+
+            strokeOval: function(x, y, rx, ry) {
+                ctx.beginPath();
+                ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+                ctx.stroke();
+            },
+
+            strokePoly: function(x1, y1, x2, y2, x3, y3, x4, y4) {
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.lineTo(x3, y3);
+                ctx.lineTo(x4, y4);
+                ctx.closePath();
+                ctx.stroke();
+            },
+
+            fillCircle: function(x, y, r) {
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.fill();
+            },
+
+            fillOval: function(x, y, rx, ry) {
+                ctx.beginPath();
+                ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+                ctx.fill();
+            },
+
+            fillPoly: function(x1, y1, x2, y2, x3, y3, x4, y4) {
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.lineTo(x3, y3);
+                ctx.lineTo(x4, y4);
+                ctx.closePath();
+                ctx.fill();
+            },
+
+            
+        };
+
+        function rysuj() {
+            // Tło
+            ctx.fillStyle = '#87CEEB';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // PIERWSZY PROSTOKĄT (CYJANOWY)
+            ctx.fillStyle = '#00FFFF';
+            ctx.fillRect(100, 80, 200, 120);
+
+            // Obwód prostokąta
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 6;
+            ctx.strokeRect(100, 80, 200, 120);
+
+            // Lewe oko - białko
+            ctx.fillStyle = '#FFFFFF';
+            graphics.fillCircle(140, 120, 12);
+
+            // Prawe oko - białko
+            graphics.fillCircle(260, 120, 12);
+
+            // Źrenica - lewa
+            ctx.fillStyle = '#000000';
+            graphics.fillCircle(142, 118, 7);
+
+            // Źrenica - prawa
+            graphics.fillCircle(262, 118, 7);
+
+            // Gloss na oku - lewe
+            ctx.fillStyle = '#FFFFFF';
+            graphics.fillCircle(139, 115, 3);
+
+            // Gloss na oku - prawe
+            graphics.fillCircle(259, 115, 3);
+
+            // Uśmiech - czarne półkole (wypełnione)
+            ctx.fillStyle = '#000000';
+            ctx.beginPath();
+            ctx.moveTo(200 - 22, 160);
+            ctx.arc(200, 160, 22, 0, Math.PI);
+            ctx.fill();
+
+            //Uśmiech zęby - białe prostokąty
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(200 - 10, 160, 10, 10);
+            ctx.fillRect(200 + 5, 160, 10, 10);
+
+            //Uśmiech kąciki ust
+            ctx.beginPath();
+            // Lewe półkole 
+            const lx1 = 200 - 25, ly1 = 150;
+            const lx2 = 200 - 35, ly2 = 165;
+            const lcx = (lx1 + lx2) / 2;
+            const lcy = (ly1 + ly2) / 2;
+            const lr = Math.hypot(lx2 - lx1, ly2 - ly1) / 2;
+            const lStart = Math.atan2(ly1 - lcy, lx1 - lcx);
+            const lEnd = Math.atan2(ly2 - lcy, lx2 - lcx);
+            ctx.arc(lcx, lcy, lr, lEnd, lStart, true);
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+
+            // Prawe półkole 
+            const rx1 = 200 + 25, ry1 = 150;
+            const rx2 = 200 + 35, ry2 = 165;
+            const rcx = (rx1 + rx2) / 2;
+            const rcy = (ry1 + ry2) / 2;
+            const rr = Math.hypot(rx2 - rx1, ry2 - ry1) / 2;
+            const rStart = Math.atan2(ry1 - rcy, rx1 - rcx);
+            const rEnd = Math.atan2(ry2 - rcy, rx2 - rcx);
+            ctx.beginPath();
+            ctx.arc(rcx, rcy, rr, rEnd, rStart, false);
+
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            // TRAPEZ (ZIELONY)
+            ctx.fillStyle = '#00FF00';
+            graphics.fillPoly(120, 280, 300, 280, 340, 380, 80, 380);
+
+            // Obwód trapezu
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 6;
+            graphics.strokePoly(120, 280, 300, 280, 340, 380, 80, 380);
+
+            // Lewe oko - białko
+            ctx.fillStyle = '#FFFFFF';
+            graphics.fillCircle(140, 310, 12);
+
+            // Prawe oko - białko
+            graphics.fillCircle(260, 310, 12);
+
+            // Źrenica - lewa
+            ctx.fillStyle = '#000000';
+            graphics.fillCircle(142, 308, 7);
+
+            // Źrenica - prawa
+            graphics.fillCircle(262, 308, 7);
+
+            // Gloss na oku - lewe
+            ctx.fillStyle = '#FFFFFF';
+            graphics.fillCircle(139, 305, 3);
+
+            // Gloss na oku - prawe
+            graphics.fillCircle(259, 305, 3);
+
+            // Uśmiech - czarne półkole (wypełnione)
+            ctx.fillStyle = '#000000';
+            ctx.beginPath();
+            ctx.moveTo(200 - 22, 350);
+            ctx.arc(200, 350, 22, 0, Math.PI);
+            ctx.fill();
+
+            //Uśmiech kąciki ust
+            ctx.beginPath();
+            // Lewe półkole 
+            const tlx1 = 200 - 25, tly1 = 340;
+            const tlx2 = 200 - 35, tly2 = 355;
+            const tlcx = (tlx1 + tlx2) / 2;
+            const tlcy = (tly1 + tly2) / 2;
+            const tlr = Math.hypot(tlx2 - tlx1, tly2 - tly1) / 2;
+            const tlStart = Math.atan2(tly1 - tlcy, tlx1 - tlcx);
+            const tlEnd = Math.atan2(tly2 - tlcy, tlx2 - tlcx);
+            ctx.arc(tlcx, tlcy, tlr, tlEnd, tlStart, true);
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+
+            // Prawe półkole 
+            const trx1 = 200 + 25, try1 = 340;
+            const trx2 = 200 + 35, try2 = 355;
+            const trcx = (trx1 + trx2) / 2;
+            const trcy = (try1 + try2) / 2;
+            const trr = Math.hypot(trx2 - trx1, try2 - try1) / 2;
+            const trStart = Math.atan2(try1 - trcy, trx1 - trcx);
+            const trEnd = Math.atan2(try2 - trcy, trx2 - trcx);
+            ctx.beginPath();
+            ctx.arc(trcx, trcy, trr, trEnd, trStart, false);
+
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            //Uśmiech zęby - białe prostokąty
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(200 - 10, 350, 10, 10);
+            ctx.fillRect(200 + 5, 350, 10, 10);
+        
+        }
+
+        // Rysuj po załadowaniu
+        rysuj();
+    </script>
+</body>
+</html>
