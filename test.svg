@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="826" height="766" viewBox="0 0 826 766">
+  <title>Zadanie 7 - scena hierarchiczna</title>
+
+  <defs>
+    <style>
+      .bg { fill: #dddddd; }
+      .beam { fill: #ff1010; }
+      .wheel-ring { fill: none; stroke: #7a7a7a; stroke-width: 2; }
+      .spoke { stroke: #8a8a8a; stroke-width: 2; }
+      .pivot-purple { fill: #7a1388; }
+      .pivot-green { fill: #0b8f13; }
+      .pivot-blue { fill: #0a11e8; }
+    </style>
+
+    <g id="seesawCore">
+      <g transform="translate(-100 0)">
+        <use href="#polyWheel" />
+      </g>
+      <g transform="translate(100 0)">
+        <use href="#polyWheel" />
+      </g>
+      <rect x="-110" y="-8" width="220" height="16" rx="5" class="beam" />
+    </g>
+    <g id="polyWheel">
+      <polygon
+        class="wheel-ring"
+        points="44,0 38.11,22 22,38.11 0,44 -22,38.11 -38.11,22 -44,0 -38.11,-22 -22,-38.11 0,-44 22,-38.11 38.11,-22"
+      />
+      <line x1="0" y1="0" x2="44" y2="0" class="spoke" />
+      <line x1="0" y1="0" x2="38.11" y2="22" class="spoke" />
+      <line x1="0" y1="0" x2="22" y2="38.11" class="spoke" />
+      <line x1="0" y1="0" x2="0" y2="44" class="spoke" />
+      <line x1="0" y1="0" x2="-22" y2="38.11" class="spoke" />
+      <line x1="0" y1="0" x2="-38.11" y2="22" class="spoke" />
+      <line x1="0" y1="0" x2="-44" y2="0" class="spoke" />
+      <line x1="0" y1="0" x2="-38.11" y2="-22" class="spoke" />
+      <line x1="0" y1="0" x2="-22" y2="-38.11" class="spoke" />
+      <line x1="0" y1="0" x2="0" y2="-44" class="spoke" />
+      <line x1="0" y1="0" x2="22" y2="-38.11" class="spoke" />
+      <line x1="0" y1="0" x2="38.11" y2="-22" class="spoke" />
+      <animateTransform
+        attributeName="transform"
+        attributeType="XML"
+        type="rotate"
+        from="0 0 0"
+        to="360 0 0"
+        dur="6s"
+        repeatCount="indefinite"
+      />
+    </g>
+  </defs>
+
+  <rect x="0" y="0" width="826" height="766" class="bg" />
+
+ 
+  <g transform="translate(210 145)">
+    <g transform="rotate(16)">
+      <use href="#seesawCore" />
+    </g>
+    <polygon points="0,0 -24,135 24,135" class="pivot-purple" />
+  </g>
+
+
+  <g transform="translate(612 150)">
+     <g transform="scale(0.7) rotate(14)">
+      <use href="#seesawCore" />
+    </g>
+    <polygon points="0,0 -18,105 18,105" class="pivot-green" />
+  </g>
+
+  <g transform="translate(430 430)">
+    <g transform="scale(1.28) rotate(16)">
+      <use href="#seesawCore" />
+    </g>
+    <polygon points="0,0 -34,210 34,210" class="pivot-blue" />
+  </g>
+
+
+</svg>
+
